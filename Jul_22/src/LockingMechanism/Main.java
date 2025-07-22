@@ -93,7 +93,7 @@ import java.util.concurrent.locks.*;
 //          * resource management
 //          * Reader-Writer problem
 //          * 
-//          * Solution -> Mutex, Lock, Semapohre
+//          * Solution -> Mutex, Lock, Semaphore
 //          * Mutex is just like a flag, on/off
 //          * Mutex - 1. Java own way lock
 //          * 2. Java provides its own
@@ -106,7 +106,7 @@ import java.util.concurrent.locks.*;
 
 /*
     Instead of making a counter class,
-    Java provides AtomicIntger which
+    Java provides AtomicInteger which
     does the same thing
 */
 public class Main {
