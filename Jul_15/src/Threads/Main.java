@@ -6,16 +6,20 @@ import java.io.*;
 
 class Main {
     public static void main(String[] args) {
-        // Thread thread = new Thread(() -> {
-        // int sum = 0;
+        // min priority of thread -> 1
+        // max priority of thread -> 10
 
-        // // System.out.println("Inside the thread");
-        // for (int i = 0; i < 10000; i++) {
-        // sum += i;
-        // }
+        // Thread using lambda function
+        Thread thread = new Thread(() -> {
+            int sum = 0;
 
-        // System.out.println(Thread.currentThread().getId() + " " + sum);
-        // });
+            // System.out.println("Inside the thread");
+            for (int i = 0; i < 10000; i++) {
+                sum += i;
+            }
+
+            // System.out.println(Thread.currentThread().getId() + " " + sum);
+        });
 
         // thread.run(); // not in parallel, just executes what is written in thread
 
@@ -23,7 +27,7 @@ class Main {
         // thread.start();
         /*
          * if start two times,
-         * only runs on time,
+         * only runs on first time,
          * 2nd time exception,
          * because of thread lifecycle
          * new -> running state (thread.start()) -> maybe blocked -> Terminated
