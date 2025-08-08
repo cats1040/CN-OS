@@ -6,7 +6,7 @@ import Jul_29.src.SchedulingAlgorithms.Model.Task;
 public class SRTFScheduler implements Scheduler {
     Map<Task, Thread> taskThreadMap;
 
-    public SRTFScheduler(int timeQuantum) {
+    public SRTFScheduler() {
         this.taskThreadMap = new HashMap<>();
     }
 
