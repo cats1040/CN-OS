@@ -58,9 +58,11 @@ public class RoundRobinScheduler implements Scheduler {
                 }
 
                 if (current.isCompleted()) {
-                    System.out.println("Task Completed :" + current.getTaskId());
-                    completed++;
-                    current.calculateTimes(currentTime);
+                    if (current.getCompletionTime() == 0) { // <-- NEW CHECK
+                        System.out.println("Task Completed :" + current.getTaskId());
+                        completed++;
+                        current.calculateTimes(currentTime);
+                    }
                 } else {
                     q.offer(current);
                 }

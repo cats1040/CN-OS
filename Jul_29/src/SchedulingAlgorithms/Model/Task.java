@@ -33,6 +33,7 @@ public class Task implements Runnable {
     public void pause() {
         synchronized (lock) {
             isPaused = true;
+            lock.notify();
         }
     }
 

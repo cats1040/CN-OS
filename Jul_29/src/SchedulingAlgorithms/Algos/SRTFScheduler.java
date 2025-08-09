@@ -16,7 +16,7 @@ public class SRTFScheduler implements Scheduler {
         PriorityQueue<Task> readyQueue = new PriorityQueue<>(cmp);
 
         for (Task task : taskList) {
-            Thread t = new Thread(task);
+            Thread t = new Thread(task, "Task-" + task.getTaskId());
             t.start();
             taskThreadMap.put(task, t);
         }
@@ -34,21 +34,19 @@ public class SRTFScheduler implements Scheduler {
             if (!readyQueue.isEmpty()) {
                 Task shortestTask = readyQueue.peek();
 
-                if (currentTask != null && currentTask != shortestTask) {
-                    currentTask.pause();
-                }
-
                 if (currentTask != shortestTask) {
                     currentTask = shortestTask;
-                    currentTask.resume();
                 }
+
+                currentTask.resume();
 
                 try {
                     Thread.sleep(100);
-                    currentTime++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                currentTime++;
 
                 if (currentTask.isCompleted()) {
                     currentTask.calculateTimes(currentTime);
@@ -56,13 +54,14 @@ public class SRTFScheduler implements Scheduler {
                     completed++;
                     currentTask = null;
                 }
+
             } else {
                 try {
                     Thread.sleep(100);
-                    currentTime++;
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
+                currentTime++;
             }
         }
 
@@ -70,7 +69,7 @@ public class SRTFScheduler implements Scheduler {
             try {
                 t.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
 
@@ -85,5 +84,4 @@ public class SRTFScheduler implements Scheduler {
                     t.getTurnaroundTime(), t.getWaitingTime());
         }
     }
-
 }

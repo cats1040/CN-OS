@@ -16,7 +16,7 @@ public class PriorityBasedScheduler implements Scheduler {
         PriorityQueue<Task> readyQueue = new PriorityQueue<>(cmp);
 
         for (Task task : taskList) {
-            Thread t = new Thread(task);
+            Thread t = new Thread(task, "Task-" + task.getTaskId());
             t.start();
             taskThreadMap.put(task, t);
         }
@@ -34,14 +34,11 @@ public class PriorityBasedScheduler implements Scheduler {
             if (!readyQueue.isEmpty()) {
                 Task highestPriorityTask = readyQueue.peek();
 
-                if (currentTask != null && currentTask != highestPriorityTask) {
-                    currentTask.pause();
-                }
-
                 if (currentTask != highestPriorityTask) {
                     currentTask = highestPriorityTask;
-                    currentTask.resume();
                 }
+
+                currentTask.resume();
 
                 try {
                     Thread.sleep(100);
@@ -55,13 +52,6 @@ public class PriorityBasedScheduler implements Scheduler {
                     readyQueue.remove(currentTask);
                     completed++;
                     currentTask = null;
-                } else {
-                    try {
-                        Thread.sleep(100);
-                        currentTime++;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }
