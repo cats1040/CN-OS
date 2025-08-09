@@ -41,9 +41,13 @@ public class Main {
 
     public static void pbs() {
         List<Task> testTask = new ArrayList<>();
-        testTask.add(new Task(1, 0, 4, 1));
+        testTask.add(new Task(1, 0, 4, 2));
         testTask.add(new Task(2, 1, 2, 1));
-        testTask.add(new Task(3, 2, 6, 1));
+        testTask.add(new Task(3, 2, 6, 3));
+
+        // testTask.add(new Task(1, 0, 6, 2));
+        // testTask.add(new Task(2, 1, 4, 3));
+        // testTask.add(new Task(3, 2, 5, 1));
 
         PriorityBasedScheduler pbs = new PriorityBasedScheduler();
 
@@ -55,7 +59,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        // srtfs();
-        pbs();
+        srtfs();
+        // pbs();
     }
 }

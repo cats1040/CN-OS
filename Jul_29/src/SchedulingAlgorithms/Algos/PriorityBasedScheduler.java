@@ -28,24 +28,29 @@ public class PriorityBasedScheduler implements Scheduler {
             for (Task t : taskList) {
                 if (t.getArrivalTime() == currentTime) {
                     readyQueue.offer(t);
+
+                    if (!taskThreadMap.containsKey(t)) {
+                        Thread th = new Thread(t, "Task-" + t.getTaskId());
+                        th.start();
+                        taskThreadMap.put(t, th);
+                    }
                 }
             }
 
             if (!readyQueue.isEmpty()) {
                 Task highestPriorityTask = readyQueue.peek();
 
-                if (currentTask != highestPriorityTask) {
-                    currentTask = highestPriorityTask;
-                }
+                currentTask = highestPriorityTask;
 
                 currentTask.resume();
 
                 try {
                     Thread.sleep(100);
-                    currentTime++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                currentTime++;
 
                 if (currentTask.isCompleted()) {
                     currentTask.calculateTimes(currentTime);
@@ -53,6 +58,13 @@ public class PriorityBasedScheduler implements Scheduler {
                     completed++;
                     currentTask = null;
                 }
+            } else {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                currentTime++;
             }
         }
 
