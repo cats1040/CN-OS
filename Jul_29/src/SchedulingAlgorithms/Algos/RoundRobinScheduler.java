@@ -19,19 +19,18 @@ public class RoundRobinScheduler implements Scheduler {
             // All threads start but are paused —
             // they won’t run until resumed by the
             // scheduler.
-            Thread t = new Thread(task, "Task-" + task.getTaskId() + "-" + task.getArrivalTime());
-            t.start();
-            taskThreadMap.put(task, t);
+            Thread thread = new Thread(task, "Task-" + task.getTaskId() + "-" + task.getArrivalTime());
+            thread.start();
+            taskThreadMap.put(task, thread);
         }
 
-        int currentTime = 0, completed = 0;
+        int currentTime = 0, completed = 0, idx = 0;
 
         while (completed < taskList.size()) {
-
-            for (Task t : taskList) {
-                if (t.getArrivalTime() == currentTime) {
-                    q.offer(t);
-                }
+            // Add new tasks, based on current time
+            while (idx < taskList.size() && taskList.get(idx).getArrivalTime() <= currentTime) {
+                q.offer(taskList.get(idx));
+                idx++;
             }
 
             try {
@@ -42,23 +41,23 @@ public class RoundRobinScheduler implements Scheduler {
                 }
 
                 Task current = q.poll();
+                int time = 0;
 
                 // t1 -8 , t4 , t5
-                for (int i = 0; i < timeQuantum; i++) {
+                while (time < timeQuantum && !current.isCompleted()) {
                     current.resume();
                     Thread.sleep(100);
                     currentTime++;
-                    for (Task t : taskList) {
-                        if (t.getArrivalTime() == currentTime) {
-                            q.offer(t);
-                        }
+                    time++;
+
+                    while (idx < taskList.size() && taskList.get(idx).getArrivalTime() <= currentTime) {
+                        q.offer(taskList.get(idx));
+                        idx++;
                     }
-                    if (current.isCompleted())
-                        break;
                 }
 
                 if (current.isCompleted()) {
-                    if (current.getCompletionTime() == 0) { // <-- NEW CHECK
+                    if (current.getCompletionTime() == 0) {
                         System.out.println("Task Completed :" + current.getTaskId());
                         completed++;
                         current.calculateTimes(currentTime);
@@ -71,7 +70,9 @@ public class RoundRobinScheduler implements Scheduler {
             }
         }
 
-        for (Thread t : taskThreadMap.values()) {
+        for (
+
+        Thread t : taskThreadMap.values()) {
             try {
                 t.join();
             } catch (InterruptedException e) {

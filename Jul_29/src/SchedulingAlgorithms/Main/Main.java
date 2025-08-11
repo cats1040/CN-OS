@@ -9,13 +9,19 @@ import Jul_29.src.SchedulingAlgorithms.Model.Task;
 
 public class Main {
     public static void rrs() {
+        // List<Task> testTask = new ArrayList<>();
+        // testTask.add(new Task(1, 0, 5, 1));
+        // testTask.add(new Task(2, 1, 4, 1));
+        // testTask.add(new Task(3, 2, 2, 1));
+        // testTask.add(new Task(4, 4, 1, 1));
+
         List<Task> testTask = new ArrayList<>();
         testTask.add(new Task(1, 0, 5, 1));
-        testTask.add(new Task(2, 1, 4, 1));
-        testTask.add(new Task(3, 2, 2, 1));
-        testTask.add(new Task(4, 4, 1, 1));
+        testTask.add(new Task(2, 1, 3, 2));
+        testTask.add(new Task(3, 2, 8, 1));
+        testTask.add(new Task(4, 3, 6, 3));
 
-        RoundRobinScheduler rrs = new RoundRobinScheduler(2);
+        RoundRobinScheduler rrs = new RoundRobinScheduler(3);
 
         try {
             rrs.execute(testTask);
@@ -59,7 +65,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        srtfs();
+        // srtfs();
         // pbs();
+        rrs();
     }
 }

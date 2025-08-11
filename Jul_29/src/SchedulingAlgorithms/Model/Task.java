@@ -51,7 +51,7 @@ public class Task implements Runnable {
 
                 // “Execute” one time unit
                 remainingTime--;
-                System.out.printf("Task %d executing… Remaining=%d\n", taskId, remainingTime);
+                System.out.printf("Task %d executing... Remaining=%d\n", taskId, remainingTime);
                 // Thread.sleep(100); // 100 ms = one unit
 
                 // After one unit, pause itself and notify scheduler
