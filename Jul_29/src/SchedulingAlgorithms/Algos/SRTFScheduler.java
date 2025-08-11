@@ -21,14 +21,13 @@ public class SRTFScheduler implements Scheduler {
             taskThreadMap.put(task, t);
         }
 
-        int currentTime = 0, completed = 0;
+        int currentTime = 0, completed = 0, idx = 0;
         Task currentTask = null;
 
         while (completed < taskList.size()) {
-            for (Task t : taskList) {
-                if (t.getArrivalTime() == currentTime) {
-                    readyQueue.offer(t);
-                }
+            while (idx < taskList.size() && taskList.get(idx).getArrivalTime() <= currentTime) {
+                readyQueue.offer(taskList.get(idx));
+                idx++;
             }
 
             if (!readyQueue.isEmpty()) {

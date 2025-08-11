@@ -21,24 +21,17 @@ public class PriorityBasedScheduler implements Scheduler {
             taskThreadMap.put(task, t);
         }
 
-        int currentTime = 0, completed = 0;
+        int currentTime = 0, completed = 0, idx = 0;
         Task currentTask = null;
 
         while (completed < taskList.size()) {
-            for (Task t : taskList) {
-                if (t.getArrivalTime() == currentTime) {
-                    readyQueue.offer(t);
-
-                    if (!taskThreadMap.containsKey(t)) {
-                        Thread th = new Thread(t, "Task-" + t.getTaskId());
-                        th.start();
-                        taskThreadMap.put(t, th);
-                    }
-                }
+            while (idx < taskList.size() && taskList.get(idx).getArrivalTime() <= currentTime) {
+                readyQueue.offer(taskList.get(idx));
+                idx++;
             }
 
             if (!readyQueue.isEmpty()) {
-                Task highestPriorityTask = readyQueue.peek();
+                Task highestPriorityTask = readyQueue.poll();
 
                 currentTask = highestPriorityTask;
 
@@ -46,25 +39,25 @@ public class PriorityBasedScheduler implements Scheduler {
 
                 try {
                     Thread.sleep(100);
+                    currentTime++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                currentTime++;
 
                 if (currentTask.isCompleted()) {
                     currentTask.calculateTimes(currentTime);
                     readyQueue.remove(currentTask);
                     completed++;
-                    currentTask = null;
+                } else {
+                    readyQueue.offer(currentTask);
                 }
             } else {
+                currentTime++;
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                currentTime++;
             }
         }
 
