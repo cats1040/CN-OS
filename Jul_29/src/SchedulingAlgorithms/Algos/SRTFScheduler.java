@@ -13,7 +13,17 @@ public class SRTFScheduler implements Scheduler {
     @Override
     public void execute(List<Task> taskList) {
         Comparator<Task> cmp = Comparator.comparingInt(Task::getRemainingTime);
-        PriorityQueue<Task> readyQueue = new PriorityQueue<>(cmp);
+        PriorityQueue<Task> readyQueue = new PriorityQueue<>((t1, t2) -> {
+            if (t1.getRemainingTime() != t2.getRemainingTime()) {
+                return Integer.compare(t1.getRemainingTime(), t2.getRemainingTime());
+            }
+        
+            if (t1.getPriority() != t2.getPriority()) {
+                return Integer.compare(t2.getPriority(), t1.getPriority());
+            }
+    
+            return Integer.compare(t1.getArrivalTime(), t2.getArrivalTime());
+        });
 
         for (Task task : taskList) {
             Thread t = new Thread(task, "Task-" + task.getTaskId());
