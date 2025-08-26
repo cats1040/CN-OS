@@ -1,7 +1,7 @@
-package Jul_29.src.SchedulingAlgorithms.Algos;
+// package Jul_29.src.SchedulingAlgorithms.Algos;
 
 import java.util.*;
-import Jul_29.src.SchedulingAlgorithms.Model.Task;
+// import Jul_29.src.SchedulingAlgorithms.Model.Task;
 
 public class SRTFScheduler implements Scheduler {
     Map<Task, Thread> taskThreadMap;
@@ -17,11 +17,11 @@ public class SRTFScheduler implements Scheduler {
             if (t1.getRemainingTime() != t2.getRemainingTime()) {
                 return Integer.compare(t1.getRemainingTime(), t2.getRemainingTime());
             }
-        
+
             if (t1.getPriority() != t2.getPriority()) {
                 return Integer.compare(t2.getPriority(), t1.getPriority());
             }
-    
+
             return Integer.compare(t1.getArrivalTime(), t2.getArrivalTime());
         });
 

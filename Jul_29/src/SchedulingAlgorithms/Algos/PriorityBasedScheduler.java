@@ -1,7 +1,5 @@
-package Jul_29.src.SchedulingAlgorithms.Algos;
-
 import java.util.*;
-import Jul_29.src.SchedulingAlgorithms.Model.Task;
+// import Jul_29.src.SchedulingAlgorithms.Model.Task;
 
 public class PriorityBasedScheduler implements Scheduler {
     Map<Task, Thread> taskThreadMap;

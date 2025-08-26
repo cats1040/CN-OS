@@ -1,11 +1,11 @@
-package Jul_29.src.SchedulingAlgorithms.Main;
+// package Jul_29.src.SchedulingAlgorithms.Main;
 
 import java.util.*;
 
-import Jul_29.src.SchedulingAlgorithms.Algos.PriorityBasedScheduler;
-import Jul_29.src.SchedulingAlgorithms.Algos.RoundRobinScheduler;
-import Jul_29.src.SchedulingAlgorithms.Algos.SRTFScheduler;
-import Jul_29.src.SchedulingAlgorithms.Model.Task;
+// import src.SchedulingAlgorithms.Algos.PriorityBasedScheduler;
+// import Jul_29.src.SchedulingAlgorithms.Algos.RoundRobinScheduler;
+// import Jul_29.src.SchedulingAlgorithms.Algos.SRTFScheduler;
+// import Jul_29.src.SchedulingAlgorithms.Model.Task;
 
 public class Main {
     public static void rrs() {

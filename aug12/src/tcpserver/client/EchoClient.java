@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Client class, sending and
  * receiving messages from the
- * server. 
+ * server.
  */
 public class EchoClient {
 
@@ -20,7 +20,7 @@ public class EchoClient {
   public static void main(String[] args) {
     String hostServer = "localhost";
     int serverPort = 12345;
-    
+
     try {
       Socket socket = new Socket(hostServer, serverPort);
       BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -34,7 +34,7 @@ public class EchoClient {
       while (true) {
         System.out.println("Enter the line: ");
         msg = scn.nextLine();
-        
+
         if ("exit".equals(msg)) {
           break;
         }

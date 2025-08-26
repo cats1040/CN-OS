@@ -1,6 +1,6 @@
 // package aug12.src.tcpserver.server;
 
-import java.io.BufferddReader;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -17,25 +17,23 @@ public class EchoServer {
    */
   public static void main(String[] args) {
     int port = 12345;
-    
+
     ServerSocket server = null;
 
     try {
       server = new ServerSocket(port);
       System.out.println(
-          "We are able to create the object for the ServerScoket on port " + port
-      );
+          "We are able to create the object for the ServerScoket on port " + port);
     } catch (Exception e) {
       System.out.println(
-          "We are not able to create the object for the ServerSocket on port " + port
-      );
+          "We are not able to create the object for the ServerSocket on port " + port);
     }
 
     while (true) {
       try {
         Socket client = server.accept();
         System.out.println("Client Address is: " + client.getRemoteSocketAddress());
-        
+
         Thread thread = new Thread(() -> handleClient(client));
         thread.start();
       } catch (Exception e) {
@@ -52,7 +50,7 @@ public class EchoServer {
     try {
       BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
       PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-      
+
       {
         String line;
         while ((line = in.readLine()) != null) {
